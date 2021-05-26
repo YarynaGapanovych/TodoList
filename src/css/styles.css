@@ -1,0 +1,124 @@
+@import url('https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Gochi+Hand&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Pangolin&display=swap');
+
+ body {
+	 box-sizing: border-box;
+	 display: flex;
+}
+ .todo-app {
+	 font-family: 'Gochi Hand', cursive;
+	 margin: 100px auto 0;
+	 width: 500px;
+	 display: flex;
+	 flex-direction: column;
+}
+ .app-header h1 {
+	 font-family: 'Permanent Marker', cursive;
+	 font-size: 40px;
+}
+ .app-header h2 {
+	 margin-top: 5px;
+	 text-align: right;
+	 font-size: 18px;
+}
+ .search-panel {
+	 width: 100%;
+	 margin: 20px 0 30px;
+}
+ .search-panel__btns {
+	 display: flex;
+	 margin-bottom: 10px;
+}
+ .search-panel__btns .btn {
+	 margin-right: 5px;
+}
+ .search-panel__btns .btn:last-child {
+	 margin-right: 0px;
+}
+ .search-input {
+	 width: 100%;
+}
+ .todo-list-item {
+	box-sizing: border-box;
+	 width: 100%;
+	 display: flex;
+	 justify-content: space-between;
+	 border: 1px solid rgba(0, 0, 0, .125);
+	 border-radius: 5px;
+	 padding: 10px 15px;
+	 margin-bottom: 5px;
+}
+ .todo-list-item span {
+	 font-size: 20px;
+	 padding: 10px 0 5px 15px;
+	 cursor: pointer;
+}
+ .todo-list-item.delition {
+	 animation: opacity 1s ease-in-out;
+}
+ .add-todo-panel {
+	 width: 100%;
+	 display: flex;
+	 justify-content: space-between;
+	 margin: 25px 0 120px;
+}
+ .new-todo-label {
+	 width: 100%;
+	 margin-right: 5px;
+}
+ .btn {
+	 background: transparent;
+	 padding: 5px 10px;
+	 font-family: 'Permanent Marker', cursive;
+	 letter-spacing: 1px;
+	 color: #484e53;
+	 font-size: 16px;
+	 border: 1px solid #6c757d;
+	 border-radius: 5px;
+}
+ .btn:hover {
+	 color: #fff;
+	 background-color: #6c757d;
+	 border-color: #6c757d;
+}
+ .btn.active {
+	 color: #fff;
+	 background-color: #303335;
+	 border-color: #303335;
+}
+ .input {
+	 box-sizing: border-box;
+	 height: 35px;
+	 color: #484e53;
+	 font-family: 'Pangolin', cursive;
+	 letter-spacing: 2px;
+	 font-size: 14px;
+	 border: 1px solid #6c757d;
+	 border-radius: 5px;
+	 padding-left: 15px;
+}
+ .input:focus {
+	 outline: 0;
+	 box-shadow: 0px 0px 1px 1px #6c757d;
+}
+ .done {
+	 text-decoration: line-through;
+}
+
+.important {
+	font-weight: 700;
+	letter-spacing: 2px;
+	font-size: 22px;
+	text-decoration: #484e53 underline;
+}
+
+ @keyframes opacity {
+	 from {
+		 opacity: 1;
+	}
+	 to {
+		 opacity: 0;
+	}
+}
+ 
