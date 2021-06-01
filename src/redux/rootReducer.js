@@ -1,9 +1,6 @@
 import { combineReducers } from 'redux'
-// import { createReducer } from '@reduxjs/toolkit'
-
 import { ADD_TODO, DELETE_TODO, DONE_TODO, IMPORTANT_TODO, ALL_TODOS, COMPLETED_TODOS, UNDONE_TODOS, SEARCH_TODOS } from './types'
 
-const todoList = document.querySelector('.todo-list')
 
 let initialState = {
   tasks: [
@@ -12,7 +9,6 @@ let initialState = {
     { description: "Make Awesome App", completed: false, important: false }
   ]
 }
-
 
 !localStorage.tasks
   ? initialState.tasks
