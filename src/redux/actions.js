@@ -19,10 +19,10 @@ export function deleteTodo(index) {
   }
 }
 
-export function doneTodo(index) {
+export function doneTodo(id) {
   return {
     type: DONE_TODO,
-    payload: index
+    payload: id
   }
 }
 

@@ -33,7 +33,8 @@ function todos(state = initialState, action) {
       return {
         ...state,
         tasks: [
-          ...state.tasks.slice(0, payload), ...state.tasks.slice(payload + 1)
+          ...state.tasks.filter(task => task.id != payload)
+
         ]
       }
 

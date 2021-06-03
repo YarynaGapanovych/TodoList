@@ -29,42 +29,65 @@ allBtn.classList.add('active')
 
 
 
-const createTemplate = (task) => {
-  return `<li class="todo-list-item">
-  <span class="todo - list - item - label 
-  ${task.completed ? 'done' : ''}
-  ${task.important ? 'important' : ''}">${task.description}</span>
-  <div class="todo-list-btns" >
-  <button type="button" class="btn important-btn">
-    <i class="fa fa-exclamation"></i>
-  </button>
-  <button type="button" class="btn trash-btn">
-    <i class="fa fa-trash-o"></i>
-  </button>
-</ div> 
-</li>`
+// const createTemplate = (task) => {
+//   return `<li class="todo-list-item">
+//   <span class="todo - list - item - label 
+//   ${task.completed ? 'done' : ''}
+//   ${task.important ? 'important' : ''}">${task.description}</span>
+//   <div class="todo-list-btns" >
+//   <button type="button" class="btn important-btn">
+//     <i class="fa fa-exclamation"></i>
+//   </button>
+//   <button  onclick="deleteT()" type="button" class="btn trash-btn">
+//     <i class="fa fa-trash-o"></i>
+//   </button>
+// </ div> 
+// </li>`
+// }
+
+const createtodoListItem = (todo) => {
+  const todoListItem = document.createElement('li')
+  const todoItemDesc = document.createElement('span')
+  const todoBtns = document.createElement('div')
+  const importantBtn = document.createElement('button')
+  const trashBtn = document.createElement('button')
+
+  todoItemDesc.textContent = `${todo.description}`
+
+  todoListItem.classList.add('todo-list-item')
+  todoItemDesc.classList.add('todo-list-item-label')
+  todoBtns.classList.add('todo-list-btns')
+  importantBtn.classList.add('btn', 'important-btn')
+  trashBtn.classList.add('btn', 'trash-btn')
+
+  todoListItem.appendChild(todoItemDesc)
+  todoListItem.appendChild(todoBtns)
+  todoBtns.appendChild(importantBtn)
+  todoBtns.appendChild(trashBtn)
+
+  importantBtn.innerHTML = `<i class="fa fa-exclamation"></i>`
+  trashBtn.innerHTML = `<i class="fa fa-trash-o"></i>`
+
+  // delete todo
+  trashBtn.addEventListener('click', () => {
+    todoListItem.classList.add('delition')
+    store.dispatch(deleteTodo(todo.id))
+  })
+
+  return todoListItem
 }
 
 const fillHtmlList = () => {
   todoList.innerHTML = ''
+
+
+
   if (store.getState().todos.tasks.length > 0) {
-    if (completedBtn.classList.contains('active')) {
-      store.getState().todos.completed.forEach((item) => {
-        todoList.innerHTML += createTemplate(item)
-      });
-    } else if (undoneBtn.classList.contains('active')) {
-      store.getState().todos.undone.forEach((item) => {
-        todoList.innerHTML += createTemplate(item)
-      });
-    } else if (searchInput === document.activeElement) {
-      store.getState().todos.search.forEach((item) => {
-        todoList.innerHTML += createTemplate(item)
-      });
-    } else {
-      store.getState().todos.tasks.forEach((item) => {
-        todoList.innerHTML += createTemplate(item)
-      });
-    }
+    const allTasks = store.getState().todos.tasks.forEach((item) => {
+      const taskItem = createtodoListItem(item)
+      todoList.append(taskItem)
+    });
+
 
     // done todo
     let todoItemElems = document.querySelectorAll('.todo-list-item')
@@ -78,19 +101,10 @@ const fillHtmlList = () => {
     importantBtns = document.querySelectorAll('.important-btn')
     importantBtns.forEach((important, index) => {
       important.addEventListener('click', () => {
-        // if (completedBtn.classList.contains('active')) return
         store.dispatch(importantTodo(index))
       })
     });
 
-    // delete todo
-    trashBtns = document.querySelectorAll('.trash-btn')
-    trashBtns.forEach((trash, index) => {
-      trash.addEventListener('click', () => {
-        todoItemElems[index].classList.add('delition')
-        store.dispatch(deleteTodo(index))
-      })
-    });
   }
 }
 
@@ -99,6 +113,9 @@ fillHtmlList()
 const updateLocal = () => {
   localStorage.setItem('tasks', JSON.stringify(store.getState().todos.tasks))
 }
+
+
+
 
 // add todo
 addBtn.addEventListener('click', (e) => {
