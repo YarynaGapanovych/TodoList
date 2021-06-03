@@ -23,11 +23,11 @@ const store = createStore(
   applyMiddleware(thunk)
 )
 
+window.store = store
+
 allBtn.classList.add('active')
 
-// ?
-// let todoItemElems = []
-//
+
 
 const createTemplate = (task) => {
   return `<li class="todo-list-item">
@@ -162,6 +162,8 @@ searchInput.addEventListener('keyup', (e) => {
 
   store.dispatch(searchTodos(searchArr))
 })
+
+console.log(store.getState())
 
 searchInput.onblur = () => {
   searchInput.value = ''

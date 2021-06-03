@@ -4,9 +4,9 @@ import { ADD_TODO, DELETE_TODO, DONE_TODO, IMPORTANT_TODO, ALL_TODOS, COMPLETED_
 
 let initialState = {
   tasks: [
-    { description: "Drink Coffee", completed: true, important: false },
-    { description: "Learn Redux", completed: false, important: true },
-    { description: "Make Awesome App", completed: false, important: false }
+    { id: '_' + Math.random().toString(36).substr(2, 9), description: "Drink Coffee", completed: true, important: false },
+    { id: '_' + Math.random().toString(36).substr(2, 9), description: "Learn Redux", completed: false, important: true },
+    { id: '_' + Math.random().toString(36).substr(2, 9), description: "Make Awesome App", completed: false, important: false }
   ]
 }
 
@@ -16,14 +16,16 @@ let initialState = {
 
 
 function todos(state = initialState, action) {
-  switch (action.type) {
+  const { type, payload } = action
+
+  switch (type) {
 
     case ADD_TODO:
       return {
         ...state,
         tasks: [
           ...state.tasks,
-          { description: `${action.payload}`, completed: false, important: false },
+          { id: '_' + Math.random().toString(36).substr(2, 9), description: `${payload}`, completed: false, important: false },
         ]
       }
 
@@ -31,12 +33,12 @@ function todos(state = initialState, action) {
       return {
         ...state,
         tasks: [
-          ...state.tasks.slice(0, action.payload), ...state.tasks.slice(action.payload + 1)
+          ...state.tasks.slice(0, payload), ...state.tasks.slice(payload + 1)
         ]
       }
 
     case DONE_TODO:
-      state.tasks[action.payload].completed = !state.tasks[action.payload].completed
+      state.tasks[payload].completed = !state.tasks[payload].completed
       return {
         ...state,
         tasks: [
@@ -45,7 +47,7 @@ function todos(state = initialState, action) {
       }
 
     case IMPORTANT_TODO:
-      state.tasks[action.payload].important = !state.tasks[action.payload].important
+      state.tasks[payload].important = !state.tasks[payload].important
       return {
         ...state,
         tasks: [
@@ -63,7 +65,7 @@ function todos(state = initialState, action) {
           ...state.tasks,
         ],
         completed: [
-          ...action.payload
+          ...payload
         ]
       }
 
@@ -74,7 +76,7 @@ function todos(state = initialState, action) {
           ...state.tasks,
         ],
         undone: [
-          ...action.payload
+          ...payload
         ]
       }
 
@@ -85,7 +87,7 @@ function todos(state = initialState, action) {
           ...state.tasks,
         ],
         search: [
-          ...action.payload
+          ...payload
         ]
       }
 
