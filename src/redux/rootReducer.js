@@ -33,7 +33,7 @@ function todos(state = initialState, action) {
       return {
         ...state,
         tasks: [
-          ...state.tasks.filter(task => task.id != payload)
+          ...state.tasks.filter(task => task.id !== payload)
 
         ]
       }

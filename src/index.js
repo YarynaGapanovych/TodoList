@@ -27,24 +27,6 @@ window.store = store
 
 allBtn.classList.add('active')
 
-
-
-// const createTemplate = (task) => {
-//   return `<li class="todo-list-item">
-//   <span class="todo - list - item - label 
-//   ${task.completed ? 'done' : ''}
-//   ${task.important ? 'important' : ''}">${task.description}</span>
-//   <div class="todo-list-btns" >
-//   <button type="button" class="btn important-btn">
-//     <i class="fa fa-exclamation"></i>
-//   </button>
-//   <button  onclick="deleteT()" type="button" class="btn trash-btn">
-//     <i class="fa fa-trash-o"></i>
-//   </button>
-// </ div> 
-// </li>`
-// }
-
 const createtodoListItem = (todo) => {
   const todoListItem = document.createElement('li')
   const todoItemDesc = document.createElement('span')
@@ -68,6 +50,14 @@ const createtodoListItem = (todo) => {
   importantBtn.innerHTML = `<i class="fa fa-exclamation"></i>`
   trashBtn.innerHTML = `<i class="fa fa-trash-o"></i>`
 
+  if (todo.completed) {
+    todoItemDesc.classList.add('done')
+  }
+
+  if (todo.important) {
+    todoItemDesc.classList.add('important')
+  }
+
   // delete todo
   trashBtn.addEventListener('click', () => {
     todoListItem.classList.add('delition')
@@ -77,13 +67,13 @@ const createtodoListItem = (todo) => {
   return todoListItem
 }
 
+
 const fillHtmlList = () => {
   todoList.innerHTML = ''
 
-
-
-  if (store.getState().todos.tasks.length > 0) {
-    const allTasks = store.getState().todos.tasks.forEach((item) => {
+  let tasks = store.getState().todos.tasks
+  if (tasks.length > 0) {
+    const allTasks = tasks.forEach((item) => {
       const taskItem = createtodoListItem(item)
       todoList.append(taskItem)
     });
@@ -180,7 +170,6 @@ searchInput.addEventListener('keyup', (e) => {
   store.dispatch(searchTodos(searchArr))
 })
 
-console.log(store.getState())
 
 searchInput.onblur = () => {
   searchInput.value = ''
