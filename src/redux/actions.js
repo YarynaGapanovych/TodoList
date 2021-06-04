@@ -26,10 +26,10 @@ export function doneTodo(id, completed) {
   }
 }
 
-export function importantTodo(index) {
+export function importantTodo(id, important) {
   return {
     type: IMPORTANT_TODO,
-    payload: index
+    payload: { id, important }
   }
 }
 

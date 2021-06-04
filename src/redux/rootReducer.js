@@ -18,6 +18,7 @@ let initialState = {
 function todos(state = initialState, action) {
   const { type, payload } = action
 
+
   switch (type) {
 
     case ADD_TODO:
@@ -39,27 +40,30 @@ function todos(state = initialState, action) {
       }
 
     case DONE_TODO:
-      const { id, completed } = payload
 
       return {
         ...state,
         tasks: [
           ...state.tasks.map(task => {
-            if (task.id === id) {
-              task.completed = completed
+            if (task.id === payload.id) {
+              task.completed = payload.completed
             }
             return task
           })
-
         ]
       }
 
     case IMPORTANT_TODO:
-      state.tasks[payload].important = !state.tasks[payload].important
+
       return {
         ...state,
         tasks: [
-          ...state.tasks,
+          ...state.tasks.map(task => {
+            if (task.id === payload.id) {
+              task.important = payload.important
+            }
+            return task
+          })
         ]
       }
 

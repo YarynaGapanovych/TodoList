@@ -70,6 +70,12 @@ const createtodoListItem = (todo) => {
     store.dispatch(doneTodo(todo.id, completed))
   })
 
+  // important todo
+  importantBtn.addEventListener('click', () => {
+    const important = !todo.important
+    store.dispatch(importantTodo(todo.id, important))
+  })
+
 
   return todoListItem
 }
@@ -84,17 +90,6 @@ const fillHtmlList = () => {
       const taskItem = createtodoListItem(item)
       todoList.append(taskItem)
     });
-
-
-
-    // important todo
-    importantBtns = document.querySelectorAll('.important-btn')
-    importantBtns.forEach((important, index) => {
-      important.addEventListener('click', () => {
-        store.dispatch(importantTodo(index))
-      })
-    });
-
   }
 }
 
