@@ -64,6 +64,13 @@ const createtodoListItem = (todo) => {
     store.dispatch(deleteTodo(todo.id))
   })
 
+  // done todo
+  todoItemDesc.addEventListener('click', () => {
+    const completed = !todo.completed
+    store.dispatch(doneTodo(todo.id, completed))
+  })
+
+
   return todoListItem
 }
 
@@ -79,13 +86,6 @@ const fillHtmlList = () => {
     });
 
 
-    // done todo
-    let todoItemElems = document.querySelectorAll('.todo-list-item')
-    todoItemElems.forEach((elem, index) => {
-      elem.firstElementChild.addEventListener('click', () => {
-        store.dispatch(doneTodo(index))
-      })
-    });
 
     // important todo
     importantBtns = document.querySelectorAll('.important-btn')

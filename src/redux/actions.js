@@ -7,22 +7,22 @@ export function addTodo(description) {
   }
 }
 
-export function deleteTodo(index) {
+export function deleteTodo(id) {
   return function (dispatch) {
     setTimeout(() => {
       dispatch({
         type: DELETE_TODO,
-        payload: index
+        payload: id
       })
     }, 500);
 
   }
 }
 
-export function doneTodo(id) {
+export function doneTodo(id, completed) {
   return {
     type: DONE_TODO,
-    payload: id
+    payload: { id, completed }
   }
 }
 

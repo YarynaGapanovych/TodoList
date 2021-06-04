@@ -39,11 +39,18 @@ function todos(state = initialState, action) {
       }
 
     case DONE_TODO:
-      state.tasks[payload].completed = !state.tasks[payload].completed
+      const { id, completed } = payload
+
       return {
         ...state,
         tasks: [
-          ...state.tasks,
+          ...state.tasks.map(task => {
+            if (task.id === id) {
+              task.completed = completed
+            }
+            return task
+          })
+
         ]
       }
 
