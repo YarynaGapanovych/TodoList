@@ -53,9 +53,9 @@ export function undoneTodos(undoneArr) {
   }
 }
 
-export function searchTodos(searchArr) {
+export function searchTodos(searchValue) {
   return {
     type: SEARCH_TODOS,
-    payload: searchArr
+    payload: searchValue
   }
 }

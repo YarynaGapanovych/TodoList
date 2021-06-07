@@ -3,6 +3,7 @@ import { ADD_TODO, DELETE_TODO, DONE_TODO, IMPORTANT_TODO, ALL_TODOS, COMPLETED_
 
 
 let initialState = {
+  searchValue: null,
   tasks: [
     { id: '_' + Math.random().toString(36).substr(2, 9), description: "Drink Coffee", completed: true, important: false },
     { id: '_' + Math.random().toString(36).substr(2, 9), description: "Learn Redux", completed: false, important: true },
@@ -95,12 +96,7 @@ function todos(state = initialState, action) {
     case SEARCH_TODOS:
       return {
         ...state,
-        tasks: [
-          ...state.tasks,
-        ],
-        search: [
-          ...payload
-        ]
+        searchValue: payload
       }
 
     default:

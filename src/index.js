@@ -85,8 +85,14 @@ const fillHtmlList = () => {
   todoList.innerHTML = ''
 
   let tasks = store.getState().todos.tasks
+  let searchValue = store.getState().todos.searchValue
+
+  const filteredTasks = searchValue
+    ? tasks.filter(task => task.description.toLowerCase().includes(searchValue.toLowerCase()))
+    : tasks
+
   if (tasks.length > 0) {
-    const allTasks = tasks.forEach((item) => {
+    filteredTasks.forEach((item) => {
       const taskItem = createtodoListItem(item)
       todoList.append(taskItem)
     });
@@ -111,66 +117,47 @@ addBtn.addEventListener('click', (e) => {
 })
 
 // all todos
-allBtn.addEventListener('click', () => {
-  allBtn.classList.add('active')
-  completedBtn.classList.remove('active')
-  undoneBtn.classList.remove('active')
+// allBtn.addEventListener('click', () => {
+//   allBtn.classList.add('active')
+//   completedBtn.classList.remove('active')
+//   undoneBtn.classList.remove('active')
 
-  store.dispatch(allTodos())
-})
+//   store.dispatch(allTodos())
+// })
 
 // completed todos
-completedBtn.addEventListener('click', () => {
-  completedBtn.classList.add('active')
-  allBtn.classList.remove('active')
-  undoneBtn.classList.remove('active')
+// completedBtn.addEventListener('click', () => {
+//   completedBtn.classList.add('active')
+//   allBtn.classList.remove('active')
+//   undoneBtn.classList.remove('active')
 
-  let completedArr = []
-  store.getState().todos.tasks.forEach((item) => {
-    if (item.completed) {
-      completedArr.push(item)
-    }
-  });
+//   let completedArr = []
+//   store.getState().todos.tasks.forEach((item) => {
+//     if (item.completed) {
+//       completedArr.push(item)
+//     }
+//   });
 
-  store.dispatch(completedTodos(completedArr))
-})
+//   store.dispatch(completedTodos(completedArr))
+// })
 
 // undone todos
-undoneBtn.addEventListener('click', () => {
-  undoneBtn.classList.add('active')
-  allBtn.classList.remove('active')
-  completedBtn.classList.remove('active')
 
-  let undoneArr = []
-  store.getState().todos.tasks.forEach((item) => {
-    if (!item.completed) {
-      undoneArr.push(item)
-    }
-  });
-
-  store.dispatch(undoneTodos(undoneArr))
-})
 
 // search 
-searchInput.addEventListener('keyup', (e) => {
-  const searchText = e.target.value.toLowerCase()
-  let searchArr = []
+searchInput.addEventListener('input', (e) => {
+  const { value } = e.target
+  const searchValue = value.trim()
 
-  store.getState().todos.tasks.forEach((item) => {
-    if (item.description.toLowerCase().indexOf(searchText) != -1) {
-      searchArr.push(item)
-    }
-  });
-
-  store.dispatch(searchTodos(searchArr))
+  store.dispatch(searchTodos(searchValue))
 })
 
 
-searchInput.onblur = () => {
-  searchInput.value = ''
-  allBtn.classList.add('active')
-  store.dispatch(allTodos())
-}
+// searchInput.onblur = () => {
+//   searchInput.value = ''
+//   allBtn.classList.add('active')
+//   store.dispatch(allTodos())
+// }
 
 store.subscribe(() => {
   const state = store.getState()
