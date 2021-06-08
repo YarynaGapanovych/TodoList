@@ -14,8 +14,6 @@ const addInput = document.querySelector('#add-input')
 const searchInput = document.querySelector('#search-input')
 
 const addBtn = document.querySelector('#add-btn')
-let trashBtns
-let importantBtns
 
 
 const store = createStore(
@@ -25,7 +23,26 @@ const store = createStore(
 
 window.store = store
 
-allBtn.classList.add('active')
+
+const activationFilteredBtns = () => {
+  if (store.getState().todos.allBtn.active) {
+    allBtn.classList.add('active')
+    completedBtn.classList.remove('active')
+    undoneBtn.classList.remove('active')
+  }
+  if (store.getState().todos.completedBtn.active) {
+    completedBtn.classList.add('active')
+    allBtn.classList.remove('active')
+    undoneBtn.classList.remove('active')
+  }
+  if (store.getState().todos.undoneBtn.active) {
+    undoneBtn.classList.add('active')
+    allBtn.classList.remove('active')
+    completedBtn.classList.remove('active')
+  }
+}
+
+activationFilteredBtns()
 
 const createtodoListItem = (todo) => {
   const todoListItem = document.createElement('li')
@@ -87,13 +104,32 @@ const fillHtmlList = () => {
   let tasks = store.getState().todos.tasks
   let searchValue = store.getState().todos.searchValue
 
-  const filteredTasks = searchValue
-    ? tasks.filter(task => task.description.toLowerCase().includes(searchValue.toLowerCase()))
-    : tasks
+  // const filteredTasks = searchValue
+  //   ? tasks.filter(task => task.description.toLowerCase().includes(searchValue.toLowerCase()))
+  //   : tasks
+
+  let filteredTasks
+
+  if (store.getState().todos.completedBtn.active) {
+    filteredTasks = tasks.filter(task => task.completed)
+  } else if (store.getState().todos.undoneBtn.active) {
+    filteredTasks = tasks.filter(task => !task.completed)
+  } else if (searchValue) {
+    filteredTasks = tasks.filter(task => task.description.toLowerCase().includes(searchValue.toLowerCase()))
+  } else {
+    filteredTasks = tasks
+  }
+
+
+  // if (searchValue) {
+  //   filteredTasks = tasks.filter(task => task.description.toLowerCase().includes(searchValue.toLowerCase()))
+  // } else {
+  //   filteredTasks = tasks
+  // }
 
   if (tasks.length > 0) {
-    filteredTasks.forEach((item) => {
-      const taskItem = createtodoListItem(item)
+    filteredTasks.forEach((task) => {
+      const taskItem = createtodoListItem(task)
       todoList.append(taskItem)
     });
   }
@@ -106,8 +142,6 @@ const updateLocal = () => {
 }
 
 
-
-
 // add todo
 addBtn.addEventListener('click', (e) => {
   e.preventDefault()
@@ -116,33 +150,22 @@ addBtn.addEventListener('click', (e) => {
   addInput.value = ''
 })
 
-// all todos
-// allBtn.addEventListener('click', () => {
-//   allBtn.classList.add('active')
-//   completedBtn.classList.remove('active')
-//   undoneBtn.classList.remove('active')
+//
 
-//   store.dispatch(allTodos())
-// })
+// all todos
+allBtn.addEventListener('click', () => {
+  store.dispatch(allTodos())
+})
 
 // completed todos
-// completedBtn.addEventListener('click', () => {
-//   completedBtn.classList.add('active')
-//   allBtn.classList.remove('active')
-//   undoneBtn.classList.remove('active')
-
-//   let completedArr = []
-//   store.getState().todos.tasks.forEach((item) => {
-//     if (item.completed) {
-//       completedArr.push(item)
-//     }
-//   });
-
-//   store.dispatch(completedTodos(completedArr))
-// })
+completedBtn.addEventListener('click', () => {
+  store.dispatch(completedTodos())
+})
 
 // undone todos
-
+undoneBtn.addEventListener('click', () => {
+  store.dispatch(undoneTodos())
+})
 
 // search 
 searchInput.addEventListener('input', (e) => {
@@ -164,6 +187,8 @@ store.subscribe(() => {
 
   updateLocal()
   fillHtmlList()
+  activationFilteredBtns()
+
 })
 
 

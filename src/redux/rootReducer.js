@@ -8,7 +8,11 @@ let initialState = {
     { id: '_' + Math.random().toString(36).substr(2, 9), description: "Drink Coffee", completed: true, important: false },
     { id: '_' + Math.random().toString(36).substr(2, 9), description: "Learn Redux", completed: false, important: true },
     { id: '_' + Math.random().toString(36).substr(2, 9), description: "Make Awesome App", completed: false, important: false }
-  ]
+  ],
+  allBtn: { active: true },
+  completedBtn: { active: false },
+  undoneBtn: { active: false },
+
 }
 
 !localStorage.tasks
@@ -69,28 +73,27 @@ function todos(state = initialState, action) {
       }
 
     case ALL_TODOS:
-      return state
+      return {
+        ...state,
+        allBtn: { active: true },
+        completedBtn: { active: false },
+        undoneBtn: { active: false }
+      }
 
     case COMPLETED_TODOS:
       return {
         ...state,
-        tasks: [
-          ...state.tasks,
-        ],
-        completed: [
-          ...payload
-        ]
+        allBtn: { active: false },
+        completedBtn: { active: true },
+        undoneBtn: { active: false }
       }
 
     case UNDONE_TODOS:
       return {
         ...state,
-        tasks: [
-          ...state.tasks,
-        ],
-        undone: [
-          ...payload
-        ]
+        allBtn: { active: false },
+        completed: { active: false },
+        undoneBtn: { active: true }
       }
 
     case SEARCH_TODOS:

@@ -39,17 +39,15 @@ export function allTodos() {
   }
 }
 
-export function completedTodos(completedArr) {
+export function completedTodos() {
   return {
-    type: COMPLETED_TODOS,
-    payload: completedArr
+    type: COMPLETED_TODOS
   }
 }
 
-export function undoneTodos(undoneArr) {
+export function undoneTodos() {
   return {
-    type: UNDONE_TODOS,
-    payload: undoneArr
+    type: UNDONE_TODOS
   }
 }
 
