@@ -20,12 +20,10 @@ let initialState = {
   : initialState.tasks = JSON.parse(localStorage.getItem('tasks'))
 
 
-function todos(state = initialState, action) {
+function todosReducer(state = initialState, action) {
   const { type, payload } = action
 
-
   switch (type) {
-
     case ADD_TODO:
       return {
         ...state,
@@ -45,7 +43,6 @@ function todos(state = initialState, action) {
       }
 
     case DONE_TODO:
-
       return {
         ...state,
         tasks: [
@@ -59,7 +56,6 @@ function todos(state = initialState, action) {
       }
 
     case IMPORTANT_TODO:
-
       return {
         ...state,
         tasks: [
@@ -71,7 +67,15 @@ function todos(state = initialState, action) {
           })
         ]
       }
+    default:
+      return state
+  }
+}
 
+function filterReducer(state = initialState, action) {
+  const { type, payload } = action
+
+  switch (type) {
     case ALL_TODOS:
       return {
         ...state,
@@ -119,7 +123,7 @@ function todos(state = initialState, action) {
   }
 }
 
-
 export const rootReducer = combineReducers({
-  todos
+  todos: todosReducer,
+  filter: filterReducer
 })

@@ -25,17 +25,19 @@ window.store = store
 
 
 const activationFilteredBtns = () => {
-  if (store.getState().todos.allBtn.active) {
+  let state = store.getState().filter
+
+  if (state.allBtn.active) {
     allBtn.classList.add('active')
     completedBtn.classList.remove('active')
     undoneBtn.classList.remove('active')
   }
-  if (store.getState().todos.completedBtn.active) {
+  if (state.completedBtn.active) {
     completedBtn.classList.add('active')
     allBtn.classList.remove('active')
     undoneBtn.classList.remove('active')
   }
-  if (store.getState().todos.undoneBtn.active) {
+  if (state.undoneBtn.active) {
     undoneBtn.classList.add('active')
     allBtn.classList.remove('active')
     completedBtn.classList.remove('active')
@@ -100,23 +102,21 @@ const createtodoListItem = (todo) => {
 const fillHtmlList = () => {
   todoList.innerHTML = ''
 
-  let state = store.getState().todos
-  let tasks = state.tasks
-  let searchValue = store.getState().todos.searchValue
-
+  let state = store.getState()
+  let tasks = state.todos.tasks
+  let searchValue = state.filter.searchValue
 
   let filteredTasks
 
-
-  if (state.completedBtn.active) {
+  if (state.filter.completedBtn.active) {
     filteredTasks = tasks.filter(task => task.completed)
   }
 
-  if (state.undoneBtn.active) {
+  if (state.filter.undoneBtn.active) {
     filteredTasks = tasks.filter(task => !task.completed)
   }
 
-  if (state.allBtn.active) {
+  if (state.filter.allBtn.active) {
     filteredTasks = tasks
   }
 
@@ -125,7 +125,6 @@ const fillHtmlList = () => {
   }
 
   activationFilteredBtns()
-
 
   if (tasks.length > 0) {
     filteredTasks.forEach((task) => {
