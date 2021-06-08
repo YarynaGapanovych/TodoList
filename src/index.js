@@ -42,7 +42,6 @@ const activationFilteredBtns = () => {
   }
 }
 
-activationFilteredBtns()
 
 const createtodoListItem = (todo) => {
   const todoListItem = document.createElement('li')
@@ -112,6 +111,7 @@ const fillHtmlList = () => {
   if (state.completedBtn.active) {
     filteredTasks = tasks.filter(task => task.completed)
   }
+
   if (state.undoneBtn.active) {
     filteredTasks = tasks.filter(task => !task.completed)
   }
@@ -123,6 +123,8 @@ const fillHtmlList = () => {
   if (searchValue) {
     filteredTasks = filteredTasks.filter(task => task.description.toLowerCase().includes(searchValue.toLowerCase()))
   }
+
+  activationFilteredBtns()
 
 
   if (tasks.length > 0) {
@@ -148,8 +150,8 @@ addBtn.addEventListener('click', (e) => {
   addInput.value = ''
 })
 
-// filtration btns
 
+// filtration btns
 allBtn.addEventListener('click', () => {
   store.dispatch(allTodos())
 })
@@ -171,19 +173,11 @@ searchInput.addEventListener('input', (e) => {
 })
 
 
-// searchInput.onblur = () => {
-//   searchInput.value = ''
-//   allBtn.classList.add('active')
-//   store.dispatch(allTodos())
-// }
-
 store.subscribe(() => {
   const state = store.getState()
 
   updateLocal()
   fillHtmlList()
-  activationFilteredBtns()
-
 })
 
 
