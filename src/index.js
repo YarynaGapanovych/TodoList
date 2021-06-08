@@ -101,31 +101,29 @@ const createtodoListItem = (todo) => {
 const fillHtmlList = () => {
   todoList.innerHTML = ''
 
-  let tasks = store.getState().todos.tasks
+  let state = store.getState().todos
+  let tasks = state.tasks
   let searchValue = store.getState().todos.searchValue
 
-  // const filteredTasks = searchValue
-  //   ? tasks.filter(task => task.description.toLowerCase().includes(searchValue.toLowerCase()))
-  //   : tasks
 
   let filteredTasks
 
-  if (store.getState().todos.completedBtn.active) {
+
+  if (state.completedBtn.active) {
     filteredTasks = tasks.filter(task => task.completed)
-  } else if (store.getState().todos.undoneBtn.active) {
+  }
+  if (state.undoneBtn.active) {
     filteredTasks = tasks.filter(task => !task.completed)
-  } else if (searchValue) {
-    filteredTasks = tasks.filter(task => task.description.toLowerCase().includes(searchValue.toLowerCase()))
-  } else {
+  }
+
+  if (state.allBtn.active) {
     filteredTasks = tasks
   }
 
+  if (searchValue) {
+    filteredTasks = filteredTasks.filter(task => task.description.toLowerCase().includes(searchValue.toLowerCase()))
+  }
 
-  // if (searchValue) {
-  //   filteredTasks = tasks.filter(task => task.description.toLowerCase().includes(searchValue.toLowerCase()))
-  // } else {
-  //   filteredTasks = tasks
-  // }
 
   if (tasks.length > 0) {
     filteredTasks.forEach((task) => {
@@ -150,19 +148,16 @@ addBtn.addEventListener('click', (e) => {
   addInput.value = ''
 })
 
-//
+// filtration btns
 
-// all todos
 allBtn.addEventListener('click', () => {
   store.dispatch(allTodos())
 })
 
-// completed todos
 completedBtn.addEventListener('click', () => {
   store.dispatch(completedTodos())
 })
 
-// undone todos
 undoneBtn.addEventListener('click', () => {
   store.dispatch(undoneTodos())
 })

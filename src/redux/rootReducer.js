@@ -75,6 +75,9 @@ function todos(state = initialState, action) {
     case ALL_TODOS:
       return {
         ...state,
+        tasks: [
+          ...state.tasks
+        ],
         allBtn: { active: true },
         completedBtn: { active: false },
         undoneBtn: { active: false }
@@ -83,6 +86,9 @@ function todos(state = initialState, action) {
     case COMPLETED_TODOS:
       return {
         ...state,
+        tasks: [
+          ...state.tasks
+        ],
         allBtn: { active: false },
         completedBtn: { active: true },
         undoneBtn: { active: false }
@@ -91,6 +97,9 @@ function todos(state = initialState, action) {
     case UNDONE_TODOS:
       return {
         ...state,
+        tasks: [
+          ...state.tasks
+        ],
         allBtn: { active: false },
         completed: { active: false },
         undoneBtn: { active: true }
@@ -99,6 +108,9 @@ function todos(state = initialState, action) {
     case SEARCH_TODOS:
       return {
         ...state,
+        tasks: [
+          ...state.tasks
+        ],
         searchValue: payload
       }
 
