@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux'
-import { ADD_TODO, DELETE_TODO, DONE_TODO, IMPORTANT_TODO, ALL_TODOS, COMPLETED_TODOS, UNDONE_TODOS, SEARCH_TODOS } from './types'
+import { ADD_TODO, DELETE_TODO, DONE_TODO, IMPORTANT_TODO, FILTER_TODOS, SEARCH_TODOS } from './types'
 
 
 let initialState = {
@@ -9,9 +9,7 @@ let initialState = {
     { id: '_' + Math.random().toString(36).substring(2, 9), description: "Learn Redux", completed: false, important: true },
     { id: '_' + Math.random().toString(36).substring(2, 9), description: "Make Awesome App", completed: false, important: false }
   ],
-  allBtn: { active: true },
-  completedBtn: { active: false },
-  undoneBtn: { active: false },
+  filter: 'all',
 }
 
 !localStorage.tasks
@@ -74,37 +72,13 @@ function filterReducer(state = initialState, action) {
   const { type, payload } = action
 
   switch (type) {
-    case ALL_TODOS:
+    case FILTER_TODOS:
       return {
         ...state,
         tasks: [
           ...state.tasks
         ],
-        allBtn: { active: true },
-        completedBtn: { active: false },
-        undoneBtn: { active: false }
-      }
-
-    case COMPLETED_TODOS:
-      return {
-        ...state,
-        tasks: [
-          ...state.tasks
-        ],
-        allBtn: { active: false },
-        completedBtn: { active: true },
-        undoneBtn: { active: false }
-      }
-
-    case UNDONE_TODOS:
-      return {
-        ...state,
-        tasks: [
-          ...state.tasks
-        ],
-        allBtn: { active: false },
-        completed: { active: false },
-        undoneBtn: { active: true }
+        filter: payload
       }
 
     case SEARCH_TODOS:

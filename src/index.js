@@ -3,7 +3,7 @@ import './css/styles.css'
 import { applyMiddleware, createStore } from 'redux'
 import thunk from 'redux-thunk'
 import { rootReducer } from './redux/rootReducer'
-import { addTodo, deleteTodo, doneTodo, importantTodo, allTodos, completedTodos, undoneTodos, searchTodos } from './redux/actions'
+import { addTodo, deleteTodo, doneTodo, importantTodo, filter, searchTodos } from './redux/actions'
 
 const allBtn = document.querySelector('#all-btn')
 const completedBtn = document.querySelector('#completed-btn')
@@ -79,21 +79,21 @@ const createtodoListItem = (todo) => {
 const handlerSetFilterBtnActive = () => {
   let state = store.getState().filter
 
-  if (state.allBtn.active) {
-    allBtn.classList.add('active')
-    completedBtn.classList.remove('active')
-    undoneBtn.classList.remove('active')
-  }
-  if (state.completedBtn.active) {
-    completedBtn.classList.add('active')
-    allBtn.classList.remove('active')
-    undoneBtn.classList.remove('active')
-  }
-  if (state.undoneBtn.active) {
-    undoneBtn.classList.add('active')
-    allBtn.classList.remove('active')
-    completedBtn.classList.remove('active')
-  }
+  // if (state.allBtn.active) {
+  //   allBtn.classList.add('active')
+  //   completedBtn.classList.remove('active')
+  //   undoneBtn.classList.remove('active')
+  // }
+  // if (state.completedBtn.active) {
+  //   completedBtn.classList.add('active')
+  //   allBtn.classList.remove('active')
+  //   undoneBtn.classList.remove('active')
+  // }
+  // if (state.undoneBtn.active) {
+  //   undoneBtn.classList.add('active')
+  //   allBtn.classList.remove('active')
+  //   completedBtn.classList.remove('active')
+  // }
 }
 
 
@@ -102,21 +102,23 @@ const fillHtmlList = () => {
 
   const state = store.getState()
   const { tasks } = state.todos
-  const { allBtn, completedBtn, undoneBtn, searchValue } = state.filter
+  const { filter, searchValue } = state.filter
 
   let filteredTasks
 
-  if (completedBtn.active) {
+
+  if (filter === 'all') {
+    filteredTasks = tasks
+  }
+
+  if (filter === 'completed') {
     filteredTasks = tasks.filter(task => task.completed)
   }
 
-  if (undoneBtn.active) {
+  if (filter === 'undone') {
     filteredTasks = tasks.filter(task => !task.completed)
   }
 
-  if (allBtn.active) {
-    filteredTasks = tasks
-  }
 
   if (searchValue) {
     filteredTasks = filteredTasks.filter(task => task.description.toLowerCase().includes(searchValue.toLowerCase()))
@@ -150,15 +152,18 @@ addBtn.addEventListener('click', (e) => {
 
 // filtration btns
 allBtn.addEventListener('click', () => {
-  store.dispatch(allTodos())
+  const filterType = 'all'
+  store.dispatch(filter(filterType))
 })
 
 completedBtn.addEventListener('click', () => {
-  store.dispatch(completedTodos())
+  const filterType = 'completed'
+  store.dispatch(filter(filterType))
 })
 
 undoneBtn.addEventListener('click', () => {
-  store.dispatch(undoneTodos())
+  const filterType = 'undone'
+  store.dispatch(filter(filterType))
 })
 
 // search 
@@ -171,8 +176,6 @@ searchInput.addEventListener('input', (e) => {
 
 
 store.subscribe(() => {
-  const state = store.getState()
-
   updateLocal()
   fillHtmlList()
 })

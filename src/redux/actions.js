@@ -1,4 +1,4 @@
-import { ADD_TODO, DELETE_TODO, DONE_TODO, IMPORTANT_TODO, ALL_TODOS, COMPLETED_TODOS, UNDONE_TODOS, SEARCH_TODOS } from './types'
+import { ADD_TODO, DELETE_TODO, DONE_TODO, IMPORTANT_TODO, FILTER_TODOS, SEARCH_TODOS } from './types'
 
 export function addTodo(description) {
   return {
@@ -33,21 +33,10 @@ export function importantTodo(id, important) {
   }
 }
 
-export function allTodos() {
+export function filter(type) {
   return {
-    type: ALL_TODOS,
-  }
-}
-
-export function completedTodos() {
-  return {
-    type: COMPLETED_TODOS
-  }
-}
-
-export function undoneTodos() {
-  return {
-    type: UNDONE_TODOS
+    type: FILTER_TODOS,
+    payload: type
   }
 }
 
