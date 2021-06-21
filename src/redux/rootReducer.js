@@ -5,14 +5,13 @@ import { ADD_TODO, DELETE_TODO, DONE_TODO, IMPORTANT_TODO, ALL_TODOS, COMPLETED_
 let initialState = {
   searchValue: null,
   tasks: [
-    { id: '_' + Math.random().toString(36).substr(2, 9), description: "Drink Coffee", completed: true, important: false },
-    { id: '_' + Math.random().toString(36).substr(2, 9), description: "Learn Redux", completed: false, important: true },
-    { id: '_' + Math.random().toString(36).substr(2, 9), description: "Make Awesome App", completed: false, important: false }
+    { id: '_' + Math.random().toString(36).substring(2, 9), description: "Drink Coffee", completed: true, important: false },
+    { id: '_' + Math.random().toString(36).substring(2, 9), description: "Learn Redux", completed: false, important: true },
+    { id: '_' + Math.random().toString(36).substring(2, 9), description: "Make Awesome App", completed: false, important: false }
   ],
   allBtn: { active: true },
   completedBtn: { active: false },
   undoneBtn: { active: false },
-
 }
 
 !localStorage.tasks
@@ -29,7 +28,7 @@ function todosReducer(state = initialState, action) {
         ...state,
         tasks: [
           ...state.tasks,
-          { id: '_' + Math.random().toString(36).substr(2, 9), description: `${payload}`, completed: false, important: false },
+          { id: '_' + Math.random().toString(36).substring(2, 9), description: `${payload}`, completed: false, important: false },
         ]
       }
 
@@ -38,7 +37,6 @@ function todosReducer(state = initialState, action) {
         ...state,
         tasks: [
           ...state.tasks.filter(task => task.id !== payload)
-
         ]
       }
 

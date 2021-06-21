@@ -23,9 +23,7 @@
   },
   "dependencies": {
     "@reduxjs/toolkit": "^1.5.1",
-    "redux": "^4.0.5",
     "redux-devtools-extension": "^2.13.8",
-    "redux-logger": "^3.0.6",
-    "redux-thunk": "^2.3.0"
+    "redux-logger": "^3.0.6"
   }
 }
