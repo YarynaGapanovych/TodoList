@@ -143,7 +143,6 @@ const saveTasksToLocalStorage = () => {
 
 // add todo
 addBtn.addEventListener('click', (e) => {
-  e.preventDefault()
   if (addInput.value.trim() === '') return
   store.dispatch(addTodo(addInput.value.trim()))
   addInput.value = ''
