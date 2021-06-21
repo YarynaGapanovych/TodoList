@@ -98,7 +98,7 @@ const handlerSetFilterBtnActive = () => {
 }
 
 
-const fillHtmlList = () => {
+const render = () => {
   todoList.innerHTML = ''
 
   const state = store.getState()
@@ -134,9 +134,9 @@ const fillHtmlList = () => {
   }
 }
 
-fillHtmlList()
+render()
 
-const updateLocal = () => {
+const saveTasksToLocalStorage = () => {
   localStorage.setItem('tasks', JSON.stringify(store.getState().todos.tasks))
 }
 
@@ -176,8 +176,8 @@ searchInput.addEventListener('input', (e) => {
 
 
 store.subscribe(() => {
-  updateLocal()
-  fillHtmlList()
+  saveTasksToLocalStorage()
+  render()
 })
 
 
