@@ -77,23 +77,24 @@ const createtodoListItem = (todo) => {
 }
 
 const handlerSetFilterBtnActive = () => {
-  let state = store.getState().filter
+  const state = store.getState()
+  const { filter } = state.filter
 
-  // if (state.allBtn.active) {
-  //   allBtn.classList.add('active')
-  //   completedBtn.classList.remove('active')
-  //   undoneBtn.classList.remove('active')
-  // }
-  // if (state.completedBtn.active) {
-  //   completedBtn.classList.add('active')
-  //   allBtn.classList.remove('active')
-  //   undoneBtn.classList.remove('active')
-  // }
-  // if (state.undoneBtn.active) {
-  //   undoneBtn.classList.add('active')
-  //   allBtn.classList.remove('active')
-  //   completedBtn.classList.remove('active')
-  // }
+  if (filter === 'all') {
+    allBtn.classList.add('active')
+    completedBtn.classList.remove('active')
+    undoneBtn.classList.remove('active')
+  }
+  if (filter === 'completed') {
+    completedBtn.classList.add('active')
+    allBtn.classList.remove('active')
+    undoneBtn.classList.remove('active')
+  }
+  if (filter === 'undone') {
+    undoneBtn.classList.add('active')
+    allBtn.classList.remove('active')
+    completedBtn.classList.remove('active')
+  }
 }
 
 
@@ -118,7 +119,6 @@ const fillHtmlList = () => {
   if (filter === 'undone') {
     filteredTasks = tasks.filter(task => !task.completed)
   }
-
 
   if (searchValue) {
     filteredTasks = filteredTasks.filter(task => task.description.toLowerCase().includes(searchValue.toLowerCase()))
