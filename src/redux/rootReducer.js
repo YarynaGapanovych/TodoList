@@ -1,13 +1,13 @@
 import { combineReducers } from 'redux'
-import { ADD_TODO, DELETE_TODO, DONE_TODO, IMPORTANT_TODO, FILTER_TODOS, SEARCH_TODOS } from './types'
+import { ADD_TODO, DELETE_TODO, DELETE_TODO_SUCCESS, DONE_TODO, IMPORTANT_TODO, FILTER_TODOS, SEARCH_TODOS } from './types'
 
 
 let initialState = {
   searchValue: null,
   tasks: [
-    { id: '_' + Math.random().toString(36).substring(2, 9), description: "Drink Coffee", completed: true, important: false },
-    { id: '_' + Math.random().toString(36).substring(2, 9), description: "Learn Redux", completed: false, important: true },
-    { id: '_' + Math.random().toString(36).substring(2, 9), description: "Make Awesome App", completed: false, important: false }
+    { id: '_' + Math.random().toString(36).substring(2, 9), description: "Drink Coffee", completed: true, important: false, delitionIsLoading: false },
+    { id: '_' + Math.random().toString(36).substring(2, 9), description: "Learn Redux", completed: false, important: true, delitionIsLoading: false },
+    { id: '_' + Math.random().toString(36).substring(2, 9), description: "Make Awesome App", completed: false, important: false, delitionIsLoading: false }
   ],
   filter: 'all',
 }
@@ -26,11 +26,24 @@ function todosReducer(state = initialState, action) {
         ...state,
         tasks: [
           ...state.tasks,
-          { id: '_' + Math.random().toString(36).substring(2, 9), description: `${payload}`, completed: false, important: false },
+          { id: '_' + Math.random().toString(36).substring(2, 9), description: `${payload}`, completed: false, important: false, delitionIsLoading: false },
         ]
       }
 
     case DELETE_TODO:
+      return {
+        ...state,
+        tasks: [
+          ...state.tasks.map(task => {
+            if (task.id === payload) {
+              task.delitionIsLoading = true
+            }
+            return task
+          })
+        ]
+      }
+
+    case DELETE_TODO_SUCCESS:
       return {
         ...state,
         tasks: [

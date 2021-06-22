@@ -1,21 +1,28 @@
-import { ADD_TODO, DELETE_TODO, DONE_TODO, IMPORTANT_TODO, FILTER_TODOS, SEARCH_TODOS } from './types'
+import { ADD_TODO, DELETE_TODO, DELETE_TODO_SUCCESS, DONE_TODO, IMPORTANT_TODO, FILTER_TODOS, SEARCH_TODOS } from './types'
 
 export function addTodo(description) {
   return {
     type: ADD_TODO,
-    payload: `${description}`
+    payload: description
   }
 }
 
 export function deleteTodo(id) {
+  store.dispatch(deleteTodoSuccess(id))
+  return {
+    type: DELETE_TODO,
+    payload: id
+  }
+}
+
+export function deleteTodoSuccess(id) {
   return function (dispatch) {
     setTimeout(() => {
       dispatch({
-        type: DELETE_TODO,
+        type: DELETE_TODO_SUCCESS,
         payload: id
       })
     }, 500);
-
   }
 }
 

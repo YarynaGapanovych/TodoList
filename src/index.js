@@ -55,9 +55,12 @@ const createtodoListItem = (todo) => {
     todoItemDesc.classList.add('important')
   }
 
+  if (todo.delitionIsLoading) {
+    todoListItem.classList.add('delition')
+  }
+
   // delete todo
   trashBtn.addEventListener('click', () => {
-    todoListItem.classList.add('delition')
     store.dispatch(deleteTodo(todo.id))
   })
 
@@ -142,7 +145,7 @@ const saveTasksToLocalStorage = () => {
 
 
 // add todo
-addBtn.addEventListener('click', (e) => {
+addBtn.addEventListener('click', () => {
   if (addInput.value.trim() === '') return
   store.dispatch(addTodo(addInput.value.trim()))
   addInput.value = ''
@@ -175,8 +178,8 @@ searchInput.addEventListener('input', (e) => {
 
 
 store.subscribe(() => {
-  saveTasksToLocalStorage()
   render()
+  saveTasksToLocalStorage()
 })
 
 
