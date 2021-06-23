@@ -1,13 +1,22 @@
 import { combineReducers } from 'redux'
-import { ADD_TODO, DELETE_TODO, DELETE_TODO_SUCCESS, DONE_TODO, IMPORTANT_TODO, FILTER_TODOS, SEARCH_TODOS } from './types'
+import { ADD_TODO, DELETE_TODO, DELETE_TODO_SUCCESS, UPDATE_TODO, FILTER_TODOS, SEARCH_TODOS } from './types'
+
+
+function Task(description) {
+  this.id = '_' + Math.random().toString(36).substring(2, 9)
+  this.description = description
+  this.completed = false
+  this.important = false
+  this.delitionIsLoading = false
+}
 
 
 let initialState = {
   searchValue: null,
   tasks: [
-    { id: '_' + Math.random().toString(36).substring(2, 9), description: "Drink Coffee", completed: true, important: false, delitionIsLoading: false },
-    { id: '_' + Math.random().toString(36).substring(2, 9), description: "Learn Redux", completed: false, important: true, delitionIsLoading: false },
-    { id: '_' + Math.random().toString(36).substring(2, 9), description: "Make Awesome App", completed: false, important: false, delitionIsLoading: false }
+    new Task("Drink Coffee"),
+    new Task("Learn Redux"),
+    new Task("Make Awesome App"),
   ],
   filter: 'all',
 }
@@ -26,7 +35,7 @@ function todosReducer(state = initialState, action) {
         ...state,
         tasks: [
           ...state.tasks,
-          { id: '_' + Math.random().toString(36).substring(2, 9), description: `${payload}`, completed: false, important: false, delitionIsLoading: false },
+          new Task(payload),
         ]
       }
 
@@ -51,31 +60,27 @@ function todosReducer(state = initialState, action) {
         ]
       }
 
-    case DONE_TODO:
+    case UPDATE_TODO:
+      const { id, type, value } = payload
+
       return {
         ...state,
         tasks: [
           ...state.tasks.map(task => {
-            if (task.id === payload.id) {
-              task.completed = payload.completed
+            if (task.id === id) {
+              if (type === 'completed') {
+                task.completed = value
+              }
+              if (type === 'important') {
+                task.important = value
+              }
             }
+
             return task
           })
         ]
       }
 
-    case IMPORTANT_TODO:
-      return {
-        ...state,
-        tasks: [
-          ...state.tasks.map(task => {
-            if (task.id === payload.id) {
-              task.important = payload.important
-            }
-            return task
-          })
-        ]
-      }
     default:
       return state
   }

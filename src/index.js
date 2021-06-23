@@ -3,7 +3,7 @@ import './css/styles.css'
 import { applyMiddleware, createStore } from 'redux'
 import thunk from 'redux-thunk'
 import { rootReducer } from './redux/rootReducer'
-import { addTodo, deleteTodo, doneTodo, importantTodo, filter, searchTodos } from './redux/actions'
+import { addTodo, deleteTodo, updateTodo, filter, searchTodos } from './redux/actions'
 
 const allBtn = document.querySelector('#all-btn')
 const completedBtn = document.querySelector('#completed-btn')
@@ -66,14 +66,16 @@ const createtodoListItem = (todo) => {
 
   // done todo
   todoItemDesc.addEventListener('click', () => {
-    const completed = !todo.completed
-    store.dispatch(doneTodo(todo.id, completed))
+    const type = 'completed'
+    const value = !todo.completed
+    store.dispatch(updateTodo(todo.id, type, value))
   })
 
   // important todo
   importantBtn.addEventListener('click', () => {
-    const important = !todo.important
-    store.dispatch(importantTodo(todo.id, important))
+    const type = 'important'
+    const value = !todo.important
+    store.dispatch(updateTodo(todo.id, type, value))
   })
 
   return todoListItem

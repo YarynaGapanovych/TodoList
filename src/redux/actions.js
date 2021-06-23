@@ -1,4 +1,4 @@
-import { ADD_TODO, DELETE_TODO, DELETE_TODO_SUCCESS, DONE_TODO, IMPORTANT_TODO, FILTER_TODOS, SEARCH_TODOS } from './types'
+import { ADD_TODO, DELETE_TODO, DELETE_TODO_SUCCESS, UPDATE_TODO, FILTER_TODOS, SEARCH_TODOS } from './types'
 
 export function addTodo(description) {
   return {
@@ -26,17 +26,10 @@ export function deleteTodoSuccess(id) {
   }
 }
 
-export function doneTodo(id, completed) {
+export function updateTodo(id, type, value) {
   return {
-    type: DONE_TODO,
-    payload: { id, completed }
-  }
-}
-
-export function importantTodo(id, important) {
-  return {
-    type: IMPORTANT_TODO,
-    payload: { id, important }
+    type: UPDATE_TODO,
+    payload: { id, type, value }
   }
 }
 
