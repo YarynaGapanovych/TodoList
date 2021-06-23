@@ -75,21 +75,11 @@ function todosReducer(state = initialState, action) {
                 task.important = value
               }
             }
-
             return task
           })
         ]
       }
 
-    default:
-      return state
-  }
-}
-
-function filterReducer(state = initialState, action) {
-  const { type, payload } = action
-
-  switch (type) {
     case FILTER_TODOS:
       return {
         ...state,
@@ -113,7 +103,6 @@ function filterReducer(state = initialState, action) {
   }
 }
 
-export const rootReducer = combineReducers({
-  todos: todosReducer,
-  filter: filterReducer
-})
+
+export const rootReducer = todosReducer
+

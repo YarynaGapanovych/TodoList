@@ -83,7 +83,7 @@ const createtodoListItem = (todo) => {
 
 const handlerSetFilterBtnActive = () => {
   const state = store.getState()
-  const { filter } = state.filter
+  const { filter } = state
 
   if (filter === 'all') {
     allBtn.classList.add('active')
@@ -107,8 +107,7 @@ const render = () => {
   todoList.innerHTML = ''
 
   const state = store.getState()
-  const { tasks } = state.todos
-  const { filter, searchValue } = state.filter
+  const { tasks, filter, searchValue } = state
 
   let filteredTasks
 
@@ -142,7 +141,7 @@ const render = () => {
 render()
 
 const saveTasksToLocalStorage = () => {
-  localStorage.setItem('tasks', JSON.stringify(store.getState().todos.tasks))
+  localStorage.setItem('tasks', JSON.stringify(store.getState().tasks))
 }
 
 
