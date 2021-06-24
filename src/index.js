@@ -1,8 +1,6 @@
 import './css/reset.css'
 import './css/styles.css'
-import { applyMiddleware, createStore } from 'redux'
-import thunk from 'redux-thunk'
-import { rootReducer } from './redux/rootReducer'
+import { store } from './store/store'
 import { addTodo, deleteTodo, updateTodo, filter, searchTodos } from './redux/actions'
 
 const allBtn = document.querySelector('#all-btn')
@@ -14,12 +12,6 @@ const addInput = document.querySelector('#add-input')
 const searchInput = document.querySelector('#search-input')
 
 const addBtn = document.querySelector('#add-btn')
-
-
-const store = createStore(
-  rootReducer,
-  applyMiddleware(thunk)
-)
 
 window.store = store
 
@@ -66,39 +58,38 @@ const createtodoListItem = (todo) => {
 
   // done todo
   todoItemDesc.addEventListener('click', () => {
-    const type = 'completed'
-    const value = !todo.completed
-    store.dispatch(updateTodo(todo.id, type, value))
+    const type = 'completed';
+    const value = !todo.completed;
+    store.dispatch(updateTodo(todo.id, type, value));
   })
 
   // important todo
   importantBtn.addEventListener('click', () => {
-    const type = 'important'
-    const value = !todo.important
-    store.dispatch(updateTodo(todo.id, type, value))
+    const type = 'important';
+    const value = !todo.important;
+    store.dispatch(updateTodo(todo.id, type, value));
   })
 
   return todoListItem
 }
 
 const handlerSetFilterBtnActive = () => {
-  const state = store.getState()
-  const { filter } = state
+  const { filter } = store.getState();
 
   if (filter === 'all') {
-    allBtn.classList.add('active')
-    completedBtn.classList.remove('active')
-    undoneBtn.classList.remove('active')
+    allBtn.classList.add('active');
+    completedBtn.classList.remove('active');
+    undoneBtn.classList.remove('active');
   }
   if (filter === 'completed') {
-    completedBtn.classList.add('active')
-    allBtn.classList.remove('active')
-    undoneBtn.classList.remove('active')
+    completedBtn.classList.add('active');
+    allBtn.classList.remove('active');
+    undoneBtn.classList.remove('active');
   }
   if (filter === 'undone') {
-    undoneBtn.classList.add('active')
-    allBtn.classList.remove('active')
-    completedBtn.classList.remove('active')
+    undoneBtn.classList.add('active');
+    allBtn.classList.remove('active');
+    completedBtn.classList.remove('active');
   }
 }
 
@@ -106,11 +97,9 @@ const handlerSetFilterBtnActive = () => {
 const render = () => {
   todoList.innerHTML = ''
 
-  const state = store.getState()
-  const { tasks, filter, searchValue } = state
+  const { tasks, filter, searchValue } = store.getState();
 
-  let filteredTasks
-
+  let filteredTasks;
 
   if (filter === 'all') {
     filteredTasks = tasks
@@ -128,12 +117,12 @@ const render = () => {
     filteredTasks = filteredTasks.filter(task => task.description.toLowerCase().includes(searchValue.toLowerCase()))
   }
 
-  handlerSetFilterBtnActive()
+  handlerSetFilterBtnActive();
 
   if (tasks.length > 0) {
     filteredTasks.forEach((task) => {
-      const taskItem = createtodoListItem(task)
-      todoList.append(taskItem)
+      const taskItem = createtodoListItem(task);
+      todoList.append(taskItem);
     });
   }
 }
@@ -147,40 +136,40 @@ const saveTasksToLocalStorage = () => {
 
 // add todo
 addBtn.addEventListener('click', () => {
-  if (addInput.value.trim() === '') return
-  store.dispatch(addTodo(addInput.value.trim()))
-  addInput.value = ''
+  if (addInput.value.trim() === '') return;
+  store.dispatch(addTodo(addInput.value.trim()));
+  addInput.value = '';
 })
 
 
 // filtration btns
 allBtn.addEventListener('click', () => {
-  const filterType = 'all'
-  store.dispatch(filter(filterType))
+  const filterType = 'all';
+  store.dispatch(filter(filterType));
 })
 
 completedBtn.addEventListener('click', () => {
-  const filterType = 'completed'
-  store.dispatch(filter(filterType))
+  const filterType = 'completed';
+  store.dispatch(filter(filterType));
 })
 
 undoneBtn.addEventListener('click', () => {
-  const filterType = 'undone'
-  store.dispatch(filter(filterType))
+  const filterType = 'undone';
+  store.dispatch(filter(filterType));
 })
 
 // search 
 searchInput.addEventListener('input', (e) => {
-  const { value } = e.target
+  const { value } = e.target;
   const searchValue = value.trim();
 
-  store.dispatch(searchTodos(searchValue))
+  store.dispatch(searchTodos(searchValue));
 })
 
 
 store.subscribe(() => {
-  render()
-  saveTasksToLocalStorage()
+  render();
+  saveTasksToLocalStorage();
 })
 
 
