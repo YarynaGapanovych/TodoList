@@ -25,7 +25,7 @@ let initialState = {
   : initialState.tasks = JSON.parse(localStorage.getItem('tasks'))
 
 
-function todosReducer(state = initialState, action) {
+export function todosReducer(state = initialState, action) {
   const { type, payload } = action
 
   switch (type) {
@@ -103,5 +103,4 @@ function todosReducer(state = initialState, action) {
 }
 
 
-export const rootReducer = todosReducer
 
