@@ -42,7 +42,10 @@ export function todosReducer(state = initialState, action) {
         tasks: [
           ...state.tasks.map(task => {
             if (task.id === payload) {
-              task.delitionIsLoading = true
+              return {
+                ...task,
+                delitionIsLoading: true
+              }
             }
             return task
           })
