@@ -1,13 +1,6 @@
+import { Task } from './Task'
+
 import { ADD_TODO, DELETE_TODO, DELETE_TODO_SUCCESS, UPDATE_TODO, FILTER_TODOS, SEARCH_TODOS } from './types'
-
-
-function Task(description) {
-  this.id = '_' + Math.random().toString(36).substring(2, 9)
-  this.description = description
-  this.completed = false
-  this.important = false
-  this.delitionIsLoading = false
-}
 
 
 let initialState = {
