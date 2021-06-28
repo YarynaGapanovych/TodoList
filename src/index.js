@@ -1,7 +1,7 @@
 import './css/reset.css'
 import './css/styles.css'
 import { store } from './store/store'
-import { addTodo, deleteTodo, updateTodo, filter, searchTodos } from './redux/actions'
+import { addTodo, deleteTodo, updateTodo, filter, searchTodos } from './todo/actions'
 
 const allBtn = document.querySelector('#all-btn')
 const completedBtn = document.querySelector('#completed-btn')
@@ -39,17 +39,15 @@ const createtodoListItem = (todo) => {
   importantBtn.innerHTML = `<i class="fa fa-exclamation"></i>`
   trashBtn.innerHTML = `<i class="fa fa-trash-o"></i>`
 
-  if (todo.completed) {
-    todoItemDesc.classList.add('done')
-  }
+  if (todo.completed)
+    todoItemDesc.classList.add('done');
 
-  if (todo.important) {
-    todoItemDesc.classList.add('important')
-  }
+  if (todo.important)
+    todoItemDesc.classList.add('important');
 
-  if (todo.delitionIsLoading) {
-    todoListItem.classList.add('delition')
-  }
+  if (todo.delitionIsLoading)
+    todoListItem.classList.add('delition');
+
 
   // delete todo
   trashBtn.addEventListener('click', () => {
@@ -88,7 +86,6 @@ const handlerSetFilterBtnActive = () => {
 
   if (filter === undone)
     undoneBtn.classList.add('active');
-
 }
 
 
@@ -119,7 +116,6 @@ const render = () => {
     const taskItem = createtodoListItem(task);
     todoList.append(taskItem);
   });
-
 }
 
 render()
@@ -163,5 +159,3 @@ store.subscribe(() => {
   render();
   saveTasksToLocalStorage();
 })
-
-
