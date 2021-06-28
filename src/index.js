@@ -69,24 +69,26 @@ const createtodoListItem = (todo) => {
   return todoListItem
 }
 
+const all = 'all'
+const completed = 'completed'
+const undone = 'undone'
+
 const handlerSetFilterBtnActive = () => {
   const { filter } = store.getState().todos;
 
-  if (filter === 'all') {
+  allBtn.classList.remove('active');
+  completedBtn.classList.remove('active');
+  undoneBtn.classList.remove('active');
+
+  if (filter === all)
     allBtn.classList.add('active');
-    completedBtn.classList.remove('active');
-    undoneBtn.classList.remove('active');
-  }
-  if (filter === 'completed') {
+
+  if (filter === completed)
     completedBtn.classList.add('active');
-    allBtn.classList.remove('active');
-    undoneBtn.classList.remove('active');
-  }
-  if (filter === 'undone') {
+
+  if (filter === undone)
     undoneBtn.classList.add('active');
-    allBtn.classList.remove('active');
-    completedBtn.classList.remove('active');
-  }
+
 }
 
 
@@ -125,7 +127,7 @@ const render = () => {
 render()
 
 const saveTasksToLocalStorage = () => {
-  localStorage.setItem('tasks', JSON.stringify(store.getState().tasks))
+  localStorage.setItem('tasks', JSON.stringify(store.getState().todos.tasks))
 }
 
 
