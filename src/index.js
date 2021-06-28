@@ -99,20 +99,18 @@ const render = () => {
 
   let filteredTasks;
 
-  if (filter === 'all') {
-    filteredTasks = tasks
-  }
+  if (filter === all)
+    filteredTasks = tasks;
 
-  if (filter === 'completed') {
-    filteredTasks = tasks.filter(task => task.completed)
-  }
+  if (filter === completed)
+    filteredTasks = tasks.filter(task => task.completed);
 
-  if (filter === 'undone') {
-    filteredTasks = tasks.filter(task => !task.completed)
-  }
+  if (filter === undone)
+    filteredTasks = tasks.filter(task => !task.completed);
+
 
   if (searchValue) {
-    filteredTasks = filteredTasks.filter(task => task.description.toLowerCase().includes(searchValue.toLowerCase()))
+    filteredTasks = filteredTasks.filter(task => task.description.toLowerCase().includes(searchValue.toLowerCase()));
   }
 
   handlerSetFilterBtnActive();
@@ -127,7 +125,7 @@ const render = () => {
 render()
 
 const saveTasksToLocalStorage = () => {
-  localStorage.setItem('tasks', JSON.stringify(store.getState().todos.tasks))
+  localStorage.setItem('tasks', JSON.stringify(store.getState().todos.tasks));
 }
 
 
@@ -141,18 +139,15 @@ addBtn.addEventListener('click', () => {
 
 // filtration btns
 allBtn.addEventListener('click', () => {
-  const filterType = 'all';
-  store.dispatch(filter(filterType));
+  store.dispatch(filter(all));
 })
 
 completedBtn.addEventListener('click', () => {
-  const filterType = 'completed';
-  store.dispatch(filter(filterType));
+  store.dispatch(filter(completed));
 })
 
 undoneBtn.addEventListener('click', () => {
-  const filterType = 'undone';
-  store.dispatch(filter(filterType));
+  store.dispatch(filter(undone));
 })
 
 // search 
