@@ -20,9 +20,7 @@ let initialState = {
   filter: 'all',
 }
 
-!localStorage.tasks
-  ? initialState.tasks
-  : initialState.tasks = JSON.parse(localStorage.getItem('tasks'))
+if (localStorage.tasks) initialState.tasks = JSON.parse(localStorage.getItem('tasks'))
 
 
 export function todosReducer(state = initialState, action) {
@@ -60,18 +58,16 @@ export function todosReducer(state = initialState, action) {
       }
 
     case UPDATE_TODO:
-      const { id, type, value } = payload
+      const { id, data } = payload
 
       return {
         ...state,
         tasks: [
           ...state.tasks.map(task => {
             if (task.id === id) {
-              if (type === 'completed') {
-                task.completed = value
-              }
-              if (type === 'important') {
-                task.important = value
+              return {
+                ...task,
+                ...data
               }
             }
             return task
@@ -82,18 +78,12 @@ export function todosReducer(state = initialState, action) {
     case FILTER_TODOS:
       return {
         ...state,
-        tasks: [
-          ...state.tasks
-        ],
         filter: payload
       }
 
     case SEARCH_TODOS:
       return {
         ...state,
-        tasks: [
-          ...state.tasks
-        ],
         searchValue: payload
       }
 
@@ -101,6 +91,3 @@ export function todosReducer(state = initialState, action) {
       return state
   }
 }
-
-
-

@@ -58,23 +58,19 @@ const createtodoListItem = (todo) => {
 
   // done todo
   todoItemDesc.addEventListener('click', () => {
-    const type = 'completed';
-    const value = !todo.completed;
-    store.dispatch(updateTodo(todo.id, type, value));
+    store.dispatch(updateTodo(todo.id, { completed: !todo.completed }));
   })
 
   // important todo
   importantBtn.addEventListener('click', () => {
-    const type = 'important';
-    const value = !todo.important;
-    store.dispatch(updateTodo(todo.id, type, value));
+    store.dispatch(updateTodo(todo.id, { important: !todo.important }));
   })
 
   return todoListItem
 }
 
 const handlerSetFilterBtnActive = () => {
-  const { filter } = store.getState();
+  const { filter } = store.getState().todos;
 
   if (filter === 'all') {
     allBtn.classList.add('active');
@@ -97,7 +93,7 @@ const handlerSetFilterBtnActive = () => {
 const render = () => {
   todoList.innerHTML = ''
 
-  const { tasks, filter, searchValue } = store.getState();
+  const { tasks, filter, searchValue } = store.getState().todos;
 
   let filteredTasks;
 
@@ -119,12 +115,11 @@ const render = () => {
 
   handlerSetFilterBtnActive();
 
-  if (tasks.length > 0) {
-    filteredTasks.forEach((task) => {
-      const taskItem = createtodoListItem(task);
-      todoList.append(taskItem);
-    });
-  }
+  filteredTasks.forEach((task) => {
+    const taskItem = createtodoListItem(task);
+    todoList.append(taskItem);
+  });
+
 }
 
 render()

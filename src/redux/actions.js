@@ -8,15 +8,11 @@ export function addTodo(description) {
 }
 
 export function deleteTodo(id) {
-  store.dispatch(deleteTodoSuccess(id))
-  return {
-    type: DELETE_TODO,
-    payload: id
-  }
-}
-
-export function deleteTodoSuccess(id) {
   return function (dispatch) {
+    dispatch({
+      type: DELETE_TODO,
+      payload: id
+    })
     setTimeout(() => {
       dispatch({
         type: DELETE_TODO_SUCCESS,
@@ -26,10 +22,10 @@ export function deleteTodoSuccess(id) {
   }
 }
 
-export function updateTodo(id, type, value) {
+export function updateTodo(id, data) {
   return {
     type: UPDATE_TODO,
-    payload: { id, type, value }
+    payload: { id, data }
   }
 }
 

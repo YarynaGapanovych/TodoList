@@ -6,5 +6,3 @@ export const UPDATE_TODO = 'todo/update'
 
 export const FILTER_TODOS = 'filter'
 export const SEARCH_TODOS = 'filter/search'
-
-
